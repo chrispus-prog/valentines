@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Issa, Be My Valentine ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      padding: 12px;
+      overflow-x: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 20px 16px 22px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 2;
+      animation: fadeInCard 1.5s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInCard {
+      to { opacity: 1; }
+    }
+
+    h1 { color: #ff4d6d; margin: 6px 0 4px; font-size: clamp(22px, 5vw, 26px); }
+    h2 { color: #ff4d6d; margin: 10px 0 8px; font-size: clamp(18px, 4.5vw, 20px); }
+
+    .message {
+      color:#444;
+      font-size: clamp(14px, 4vw, 16px);
+      line-height:1.6;
+      margin-bottom: 10px;
+      min-height: 50px;
+    }
+
+    .photos {
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin: 10px 0;
+    }
+
+    .photos img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.18);
+    }
+
+    .why { margin: 8px 0 12px; }
+    .why-box {
+      background:#fff0f4;
+      padding:10px;
+      border-radius:10px;
+      font-weight:600;
+      color:#ff4d6d;
+      font-size: clamp(14px, 4vw, 15px);
+    }
+    .why button {
+      margin-top:6px;
+      padding:8px 14px;
+      border:none;
+      border-radius:20px;
+      background:#ff4d6d;
+      color:white;
+      font-size: 13px;
+      cursor:pointer;
+    }
+
+    .countdown { font-weight:600; color:#ff4d6d; font-size: 13px; margin: 6px 0 8px; }
+
+    .game { margin: 10px 0; }
+    .game strong { font-size: 13px; color:#444; }
+    .game-area {
+      position: relative;
+      height: 110px;
+      border-radius: 10px;
+      background:#fff7fa;
+      overflow:hidden;
+      margin-top:6px;
+    }
+    .tap-heart { position:absolute; cursor:pointer; font-size: 22px; }
+
+    .buttons { margin-top: 6px; }
+    .main {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 30px;
+      font-size: 14px;
+      cursor: pointer;
+      margin: 6px;
+      min-width: 110px;
+      touch-action: manipulation;
+    }
+    .yes { background:#ff4d6d; color:white; }
+    .no  { background:#eee; color:#555; position:absolute; }
+
+    .download { margin-top: 8px; }
+    .download a { color:#ff4d6d; font-weight:600; text-decoration:none; font-size: 13px; }
+
+    .secret {
+      display:none;
+      margin-top:8px;
+      background:#fff0f4;
+      padding:10px;
+      border-radius:10px;
+      color:#ff4d6d;
+      font-weight:600;
+      font-size: 13px;
+    }
+
+    .signature { margin-top: 8px; font-style: italic; color:#666; font-size: 12px; }
+
+    .hearts { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:1; }
+    .heart { position:absolute; animation: float 5s linear infinite; }
+    @keyframes float { from { transform: translateY(100vh); opacity:1;} to { transform: translateY(-10vh); opacity:0;} }
+
+    .back-btn {
+      margin-top: 20px;
+      display: inline-block;
+      background:#ff4d6d;
+      color:white;
+      padding:10px 16px;
+      border-radius:30px;
+      text-decoration:none;
+      cursor:pointer;
+      font-weight:600;
+      transition: 0.3s;
+    }
+    .back-btn:hover { background:#ff667e; }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="card">
+    <h1>Issa ❤️</h1>
+
+    <p class="message" id="typewriter"></p>
+
+    <div class="photos">
+      <img src="issa1.jpeg">
+      <img src="issa2.jpeg">
+      <img src="issa3.jpeg">
+      <br>
+      <img src="issa4.jpeg">
+      <img src="issa5.jpeg">
+    </div>
+
+    <div class="why">
+      <div class="why-box" id="whyBox">I love your smile.</div>
+      <button onclick="nextWhy()">Another reason 💗</button>
+    </div>
+
+    <div class="countdown" id="countdown"></div>
+
+    <div class="game">
+      <strong>Catch 3 hearts to unlock a surprise 💘</strong>
+      <div class="game-area" id="gameArea"></div>
+      <div id="gameStatus" style="font-size:12px;">Hearts caught: 0 / 3</div>
+    </div>
+
+    <h2>Will you be my Valentine? 💌</h2>
+
+    <div class="buttons">
+      <button class="main yes" onclick="yesClicked()">Yes 💖</button>
+      <button class="main no" id="noBtn">No 🙈</button>
+    </div>
+
+    <div class="download">
+      <a id="downloadLink" download="Chris_Love_Letter.txt" href="#">📜 Download my love letter</a>
+    </div>
+
+    <div class="secret" id="secretMsg">
+      🔐 You unlocked this: No matter what, I choose you today and every day. ❤️
+    </div>
+
+    <div class="signature">— With love, Chris 💕</div>
+  </div>
+
+  <div class="hearts" id="hearts"></div>
+
+  <script>
+    // Typewriter effect
+    const text = "You have this beautiful way of making ordinary moments feel special. Every laugh, every smile, every little moment with you means more to me than you know.";
+    let i = 0;
+    function typeWriter() {
+      if (i < text.length) {
+        document.getElementById("typewriter").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 35);
+      }
+    }
+    typeWriter();
+
+    // Countdown
+    const valentinesDay = new Date(new Date().getFullYear(), 1, 14);
+    const countdownEl = document.getElementById("countdown");
+    function updateCountdown() {
+      const now = new Date();
+      let target = valentinesDay;
+      if (now > target) target = new Date(new Date().getFullYear() + 1, 1, 14);
+      const diff = target - now;
+      const d = Math.floor(diff / (1000*60*60*24));
+      const h = Math.floor((diff / (1000*60*60)) % 24);
+      const m = Math.floor((diff / (1000*60)) % 60);
+      countdownEl.textContent = `🌹 Valentine’s Day in ${d}d ${h}h ${m}m`;
+    }
+    updateCountdown(); setInterval(updateCountdown, 60000);
+
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = "❤️";
+      heart.style.left = Math.random()*100 + "vw";
+      heart.style.fontSize = (Math.random()*18 + 14) + "px";
+      heart.style.animationDuration = (Math.random()*3 + 3) + "s";
+      document.getElementById("hearts").appendChild(heart);
+      setTimeout(()=>heart.remove(), 5000);
+    }
+    setInterval(createHeart, 900);
+
+    // No button
+    const noBtn = document.getElementById("noBtn");
+    const card = document.getElementById("card");
+    function moveNoBtn() {
+      const maxX = card.clientWidth - noBtn.clientWidth - 10;
+      const maxY = card.clientHeight - noBtn.clientHeight - 10;
+      noBtn.style.left = Math.max(6, Math.random()*maxX) + "px";
+      noBtn.style.top  = Math.max(6, Math.random()*maxY) + "px";
+    }
+    noBtn.addEventListener("mouseover", moveNoBtn);
+    noBtn.addEventListener("touchstart", moveNoBtn);
+
+    // Why slider
+    const reasons = [
+      "I love your smile.",
+      "I love how you care.",
+      "I love how you make me laugh.",
+      "I love how you make life softer.",
+      "I love how you understand me.",
+      "I love being myself with you."
+    ];
+    let whyIndex = 0;
+    function nextWhy() {
+      whyIndex = (whyIndex + 1) % reasons.length;
+      document.getElementById("whyBox").textContent = reasons[whyIndex];
+    }
+
+    // Mini game
+    let caught = 0;
+    const gameArea = document.getElementById("gameArea");
+    const gameStatus = document.getElementById("gameStatus");
+    function spawnTapHeart() {
+      const h = document.createElement("div");
+      h.className = "tap-heart";
+      h.textContent = "💖";
+      h.style.left = Math.random()*85 + "%";
+      h.style.top = Math.random()*65 + "%";
+      h.onclick = () => {
+        caught++;
+        h.remove();
+        gameStatus.textContent = `Hearts caught: ${caught} / 3`;
+        if (caught >= 3) document.getElementById("secretMsg").style.display = "block";
+      };
+      gameArea.appendChild(h);
+      setTimeout(()=>h.remove(), 1800);
+    }
+    setInterval(spawnTapHeart, 1200);
+
+    // Downloadable love letter
+    const letter = `Dear Issa,
+
+You mean more to me than words can explain.
+Your smile changes my whole day, and your presence makes everything feel lighter.
+Thank you for being you.
+
+Happy Valentine’s Day ❤️
+— Chris
+`;
+    document.getElementById("downloadLink").href = URL.createObjectURL(new Blob([letter], { type: "text/plain" }));
+
+    // Yes click - new page with back button
+    function yesClicked() {
+      document.body.innerHTML = `
+        <div style="min-height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#ffb6c1,#ffe4e1);font-family:Segoe UI;text-align:center;padding:20px;overflow:hidden;">
+          <div id="yesCard">
+            <h1 style="color:#ff4d6d;font-size:28px;margin-bottom:10px;">She said YES! 💘</h1>
+            <p id="yesMsg" style="font-size:16px;color:#444;min-height:50px;"></p>
+            <div style="font-size:40px;margin-top:20px;">❤️ 💖 💘 💞 💓</div>
+            <a class="back-btn" onclick="location.reload()">🔙 Back</a>
+          </div>
+        </div>
+      `;
+      // Typewriter effect for yes message
+      const yesText = "Every moment with you is my favorite memory. I can't wait to make more together. 💕";
+      let j = 0;
+      function typeYes() {
+        if (j < yesText.length) {
+          document.getElementById("yesMsg").innerHTML += yesText.charAt(j);
+          j++;
+          setTimeout(typeYes, 35);
+        }
+      }
+      typeYes();
+
+      // Floating hearts on Yes page
+      function yesHearts() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = "❤️";
+        heart.style.left = Math.random()*100 + "vw";
+        heart.style.fontSize = (Math.random()*20 + 16) + "px";
+        heart.style.animationDuration = (Math.random()*3 + 3) + "s";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(), 5000);
+      }
+      setInterval(yesHearts, 500);
+    }
+  </script>
+
+</body>
+</html>
